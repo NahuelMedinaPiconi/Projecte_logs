@@ -9,18 +9,23 @@ import java.io.OutputStreamWriter;
 public class AnalitzadorPrincipal {
     public static void main(String[] args) {
 
-        ProcessBuilder pb = new ProcessBuilder("java", "FiltreLog.java");
+        //Creació de la comanda del Fill i proves
+        ProcessBuilder pb = new ProcessBuilder("java", "projectelogs/src/main/java/com/nahuel/FiltreLog.java");
+        pb.redirectErrorStream(true);
+
         String[] llistaTexts = {
             "amncnjodn ERRORjjdso",
             "ERRORERRORmvjn",
             "knvjnin",
             "jdosjoERROR"
         };
-        
-        try {
+
+        try  {
+            //Iniciacio del proces fill
             Process process = pb.start();
             BufferedWriter escritor = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
             
+            //Escritura al fill
             for (String linia: llistaTexts) {
                 escritor.write(linia);
                 escritor.newLine();
@@ -31,6 +36,7 @@ public class AnalitzadorPrincipal {
 
             BufferedReader lector = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
+            //Lectura del fill
             String resposta;
             if ((resposta = lector.readLine()) != null) {
                 IO.println("Fill → Pare: " + resposta);

@@ -9,17 +9,18 @@ public class FiltreLog {
         Scanner sc = new Scanner(System.in);
         int contadorErrors = 0;
 
+        //Llegir les dades i trobar els registres ERROR
         while (sc.hasNextLine()) {
+
             String paraulesError = sc.nextLine() + " ";
             String paraula = "ERROR";
+
             for (int i = 0; i < paraulesError.length() - paraula.length(); i++) {
-                
                 if (paraulesError.substring(i, i + paraula.length()).equals("ERROR")) {
                     contadorErrors++;
                 }
             }
         }   
-
         System.out.println(contadorErrors);
         sc.close();
     }
