@@ -17,7 +17,8 @@ public class AnalitzadorPrincipal {
             "amncnjodn ERRORjjdso",
             "ERRORERRORmvjn",
             "knvjnin",
-            "jdosjoERROR"
+            "jdosjoERROR",
+            ""
         };
 
         try  {
@@ -42,7 +43,8 @@ public class AnalitzadorPrincipal {
                 IO.println("Fill → Pare: " + resposta);
             }
 
-            IO.println("El procés a acabat amb " + process.waitFor());
+            //Indicam com ha acabat el process fill.
+            IO.println("El procés a acabat amb codi: " + process.waitFor());
             
         } catch (IOException | InterruptedException e) {
             IO.println(e.getMessage());

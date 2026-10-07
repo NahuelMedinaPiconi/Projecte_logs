@@ -15,6 +15,11 @@ public class FiltreLog {
             String paraulesError = sc.nextLine() + " ";
             String paraula = "ERROR";
 
+            if (paraulesError.isBlank()) {
+                System.err.println("Error: Text buit");
+                System.exit(1);
+            } 
+
             for (int i = 0; i < paraulesError.length() - paraula.length(); i++) {
                 if (paraulesError.substring(i, i + paraula.length()).equals("ERROR")) {
                     contadorErrors++;
