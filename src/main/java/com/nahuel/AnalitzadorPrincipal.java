@@ -41,8 +41,10 @@ public class AnalitzadorPrincipal {
             if ((resposta = lector.readLine()) != null) {
                 IO.println("Fill → Pare: " + resposta);
             }
+
+            IO.println("El procés a acabat amb " + process.waitFor());
             
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             IO.println(e.getMessage());
         }
     }
