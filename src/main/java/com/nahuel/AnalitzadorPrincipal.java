@@ -2,6 +2,7 @@ package com.nahuel;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -11,13 +12,15 @@ public class AnalitzadorPrincipal {
 
         //Creació de la comanda del Fill i proves
         ProcessBuilder pb = new ProcessBuilder("java", "projectelogs/src/main/java/com/nahuel/FiltreLog.java");
-        pb.redirectErrorStream(true);
+
+        //Enviam els errors del proces fill a l'arxiu errors_filtre.log
+        pb.redirectError(ProcessBuilder.Redirect.to(new File("projectelogs/src/main/java/com/nahuel/errors_filtre.log")));
 
         String[] llistaTexts = {
             "amncnjodn ERRORjjdso",
             "ERRORERRORmvjn",
             "knvjnin",
-            "jdosjoERROR",
+            "jdosjoERROR"
         };
 
         try  {
@@ -39,11 +42,12 @@ public class AnalitzadorPrincipal {
             //Lectura del fill
             String resposta;
             if ((resposta = lector.readLine()) != null) {
-                IO.println("Fill → Pare: " + resposta);
+                IO.println("Fill > Pare: " + resposta);
             }
 
-            //Indicam com ha acabat el process fill.
-            IO.println("El procés a acabat amb codi: " + process.waitFor());
+            //Esperam a que el fill termini per indicar com ha acabat el process fill.
+            process.waitFor();
+            IO.println("Pare: El procés a acabat amb codi: " + process.exitValue());
             
         } catch (IOException | InterruptedException e) {
             IO.println(e.getMessage());
