@@ -18,7 +18,6 @@ public class AnalitzadorPrincipal {
             "ERRORERRORmvjn",
             "knvjnin",
             "jdosjoERROR",
-            ""
         };
 
         try  {

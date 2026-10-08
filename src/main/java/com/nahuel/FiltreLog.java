@@ -15,7 +15,8 @@ public class FiltreLog {
             String paraulesError = sc.nextLine() + " ";
             String paraula = "ERROR";
 
-            if (paraulesError.isBlank()) {
+            //Comprovam que el text no estigui buit
+            if (paraulesError == null || paraulesError.isBlank()) {
                 System.err.println("Error: Text buit");
                 System.exit(1);
             } 
