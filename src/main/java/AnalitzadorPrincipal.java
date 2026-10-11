@@ -18,12 +18,7 @@ public class AnalitzadorPrincipal {
         pbError.redirectError(ProcessBuilder.Redirect.to(new File("projectelogs/src/main/java/com/nahuel/errors_filtreError.log")));
         pbWarning.redirectError(ProcessBuilder.Redirect.to(new File("projectelogs/src/main/java/com/nahuel/errors_filtreWarning.log")));
 
-        String[] llistaTexts = {
-            "amncnjodn ERRORjjdso",
-            "ERRORERRORmvjn",
-            "knvjnWARNINGin",
-            "jdosjoERROR",
-        };
+        String[] llistaTexts = IO.readln("").split("\\r?\\n");
 
         try  {
             //Inciam els procesos fills
