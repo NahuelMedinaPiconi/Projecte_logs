@@ -16,8 +16,8 @@ public class AnalitzadorPrincipal {
         ProcessBuilder pbError = new ProcessBuilder("java", "-cp", cp, "FiltreLog");
 
         //Enviam els errors del proces fill a l'arxiu errors_filtre.log
-        pbError.redirectError(ProcessBuilder.Redirect.to(new File("projectelogs/src/main/java/com/nahuel/errors_filtreError.log")));
-        pbWarning.redirectError(ProcessBuilder.Redirect.to(new File("projectelogs/src/main/java/com/nahuel/errors_filtreWarning.log")));
+        pbError.redirectError(ProcessBuilder.Redirect.to(new File("errors_filtreError.log")));
+        pbWarning.redirectError(ProcessBuilder.Redirect.to(new File("errors_filtreWarning.log")));
 
         String[] llistaTexts = IO.readln("").split("\\r?\\n");
 

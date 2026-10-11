@@ -1,5 +1,3 @@
-package com.nahuel;
-
 import java.util.Scanner;
 
 public class FiltreLog {
@@ -9,6 +7,10 @@ public class FiltreLog {
         Scanner sc = new Scanner(System.in);
         int contadorErrors = 0;
 
+        if (!sc.hasNextLine()) {
+            systemErrorBuit();
+        }
+
         //Llegir les dades i trobar la paraula enviada pels arguments de main
         while (sc.hasNextLine()) {
 
@@ -17,8 +19,7 @@ public class FiltreLog {
 
             //Comprovam que el text no estigui buit
             if (paraulesError == null || paraulesError.isBlank()) {
-                System.err.println("Error: Text buit");
-                System.exit(1);
+                systemErrorBuit();
             } 
 
             for (int i = 0; i < paraulesError.length() - paraula.length(); i++) {
@@ -29,5 +30,10 @@ public class FiltreLog {
         }   
         System.out.println(contadorErrors);
         sc.close();
+    }
+
+    private static void systemErrorBuit() {
+        System.err.println("Error: Text buit");
+        System.exit(1);
     }
 }
