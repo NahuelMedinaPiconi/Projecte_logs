@@ -25,7 +25,7 @@ public class AvaluadorPracticaTest {
         String logExemple = "2026-09-30 INFO Inici\n2026-09-30 ERROR Fallada 1\n2026-09-30 ERROR Fallada 2\n";
         String javaClasspath = System.getProperty("java.class.path");
         
-        ProcessBuilder pb = new ProcessBuilder("java", "projectelogs/src/main/java/com/nahuel", "FiltreLog", "ERROR");
+        ProcessBuilder pb = new ProcessBuilder("java", "-cp", javaClasspath, "FiltreLog", "ERROR");
         Process p = pb.start();
 
         try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(p.getOutputStream()))) {

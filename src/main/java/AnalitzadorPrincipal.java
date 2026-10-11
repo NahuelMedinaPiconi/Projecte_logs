@@ -1,4 +1,4 @@
-package com.nahuel;
+
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -11,8 +11,9 @@ public class AnalitzadorPrincipal {
     public static void main(String[] args) {
 
         //Creació de la comanda del FillERROR i FillWARNING
-        ProcessBuilder pbWarning = new ProcessBuilder("java", "projectelogs/src/main/java/com/nahuel/FiltreLog.java", "WARNING");
-        ProcessBuilder pbError = new ProcessBuilder("java", "projectelogs/src/main/java/com/nahuel/FiltreLog.java");
+        String cp = System.getProperty("java.class.path");
+        ProcessBuilder pbWarning = new ProcessBuilder("java", "-cp", cp, "FiltreLog", "WARNING");
+        ProcessBuilder pbError = new ProcessBuilder("java", "-cp", cp, "FiltreLog");
 
         //Enviam els errors del proces fill a l'arxiu errors_filtre.log
         pbError.redirectError(ProcessBuilder.Redirect.to(new File("projectelogs/src/main/java/com/nahuel/errors_filtreError.log")));
