@@ -9,11 +9,11 @@ public class FiltreLog {
         Scanner sc = new Scanner(System.in);
         int contadorErrors = 0;
 
-        //Llegir les dades i trobar els registres ERROR
+        //Llegir les dades i trobar la paraula enviada pels arguments de main
         while (sc.hasNextLine()) {
 
             String paraulesError = sc.nextLine() + " ";
-            String paraula = "ERROR";
+            String paraula = args.length > 0 && args[0] != null ? args[0] : "ERROR";
 
             //Comprovam que el text no estigui buit
             if (paraulesError == null || paraulesError.isBlank()) {
@@ -22,7 +22,7 @@ public class FiltreLog {
             } 
 
             for (int i = 0; i < paraulesError.length() - paraula.length(); i++) {
-                if (paraulesError.substring(i, i + paraula.length()).equals("ERROR")) {
+                if (paraulesError.substring(i, i + paraula.length()).equals(paraula)) {
                     contadorErrors++;
                 }
             }

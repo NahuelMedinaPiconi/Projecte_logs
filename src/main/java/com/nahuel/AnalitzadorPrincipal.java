@@ -10,44 +10,57 @@ import java.io.OutputStreamWriter;
 public class AnalitzadorPrincipal {
     public static void main(String[] args) {
 
-        //Creació de la comanda del Fill i proves
-        ProcessBuilder pb = new ProcessBuilder("java", "projectelogs/src/main/java/com/nahuel/FiltreLog.java");
+        //Creació de la comanda del FillERROR i FillWARNING
+        ProcessBuilder pbWarning = new ProcessBuilder("java", "projectelogs/src/main/java/com/nahuel/FiltreLog.java", "WARNING");
+        ProcessBuilder pbError = new ProcessBuilder("java", "projectelogs/src/main/java/com/nahuel/FiltreLog.java");
 
         //Enviam els errors del proces fill a l'arxiu errors_filtre.log
-        pb.redirectError(ProcessBuilder.Redirect.to(new File("projectelogs/src/main/java/com/nahuel/errors_filtre.log")));
+        pbError.redirectError(ProcessBuilder.Redirect.to(new File("projectelogs/src/main/java/com/nahuel/errors_filtreError.log")));
+        pbWarning.redirectError(ProcessBuilder.Redirect.to(new File("projectelogs/src/main/java/com/nahuel/errors_filtreWarning.log")));
 
         String[] llistaTexts = {
             "amncnjodn ERRORjjdso",
             "ERRORERRORmvjn",
-            "knvjnin",
-            "jdosjoERROR"
+            "knvjnWARNINGin",
+            "jdosjoERROR",
         };
 
         try  {
-            //Iniciacio del proces fill
-            Process process = pb.start();
-            BufferedWriter escritor = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
-            
-            //Escritura al fill
-            for (String linia: llistaTexts) {
-                escritor.write(linia);
-                escritor.newLine();
+            //Inciam els procesos fills
+            Process pErr = pbError.start();
+            Process pWar = pbWarning.start();
+
+            try (
+                BufferedWriter inErr = new BufferedWriter(new OutputStreamWriter(pErr.getOutputStream()));
+                BufferedWriter inWar = new BufferedWriter(new OutputStreamWriter(pWar.getOutputStream()));
+            ) {
+                //Escritura al fill
+                for (String linia: llistaTexts) {
+                    inErr.write(linia);
+                    inWar.write(linia);
+
+                    inErr.newLine();
+                    inWar.newLine();
+                }
+
+                inErr.flush();
+                inWar.flush();
             }
 
-            escritor.flush();
-            escritor.close();
-
-            BufferedReader lector = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            BufferedReader outErr = new BufferedReader(new InputStreamReader(pErr.getInputStream()));
+            BufferedReader outWar = new BufferedReader(new InputStreamReader(pWar.getInputStream()));
 
             //Lectura del fill
-            String resposta;
-            if ((resposta = lector.readLine()) != null) {
-                IO.println("Fill > Pare: " + resposta);
-            }
-
+            String quantitatError;
+            String quantitatWarning;
+                
             //Esperam a que el fill termini per indicar com ha acabat el process fill.
-            process.waitFor();
-            IO.println("Pare: El procés a acabat amb codi: " + process.exitValue());
+            quantitatError = outErr.readLine();
+            quantitatWarning = outWar.readLine();
+            pErr.waitFor();
+            pWar.waitFor();
+            
+            IO.println("RESULTAT: ERRORS=" + quantitatError + " | WARNINGS=" + quantitatWarning + " | EXIT_CODE=" + pErr.exitValue());
             
         } catch (IOException | InterruptedException e) {
             IO.println(e.getMessage());
