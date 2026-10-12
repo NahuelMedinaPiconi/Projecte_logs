@@ -72,7 +72,14 @@ public class AvaluadorPracticaTest {
     void testNivell3_AnalitzadorPrincipalComplete() throws Exception {
         String javaClasspath = System.getProperty("java.class.path");
         ProcessBuilder pb = new ProcessBuilder("java", "-cp", javaClasspath, "AnalitzadorPrincipal");
-        Process p = pb.start();
+        Process p = pb.start(); 
+
+        String logExemple = "2026-09-30 INFO Inici\n2026-09-30 ERROR Fallada 1\n2026-09-30 WARNING Avis 1\n2026-09-30 ERROR Fallada 2\n2026-09-30 WARNING Avis 2\n2026-09-30 INFO Proces\n2026-09-30 ERROR Fallada 3\n2026-09-30 WARNING Avis 3\n2026-09-30 INFO Fi";
+
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(p.getOutputStream()))) {
+            writer.write(logExemple);
+            writer.flush();
+        }
 
         String ultimaLinia = "";
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
