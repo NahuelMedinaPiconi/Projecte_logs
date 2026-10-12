@@ -53,14 +53,10 @@ public class AnalitzadorPrincipal {
 
             BufferedReader outErr = new BufferedReader(new InputStreamReader(pErr.getInputStream()));
             BufferedReader outWar = new BufferedReader(new InputStreamReader(pWar.getInputStream()));
-
-            //Lectura del fill
-            String quantitatError;
-            String quantitatWarning;
                 
             //Esperam a que el fill termini per indicar com ha acabat el process fill.
-            quantitatError = outErr.readLine();
-            quantitatWarning = outWar.readLine();
+            String quantitatError = outErr.readLine();
+            String quantitatWarning = outWar.readLine();
             pErr.waitFor();
             pWar.waitFor();
             

@@ -22,6 +22,7 @@ public class FiltreLog {
                 systemErrorBuit();
             } 
 
+            //Filtram les paraules utilitzant for index
             for (int i = 0; i < paraulesError.length() - paraula.length(); i++) {
                 if (paraulesError.substring(i, i + paraula.length()).equals(paraula)) {
                     contadorErrors++;
