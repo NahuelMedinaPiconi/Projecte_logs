@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class AnalitzadorPrincipal {
     public static void main(String[] args) {
@@ -19,7 +21,13 @@ public class AnalitzadorPrincipal {
         pbError.redirectError(ProcessBuilder.Redirect.to(new File("errors_filtreError.log")));
         pbWarning.redirectError(ProcessBuilder.Redirect.to(new File("errors_filtreWarning.log")));
 
-        String[] llistaTexts = IO.readln("").split("\\r?\\n");
+        //Llegim els logs externs
+        ArrayList<String> llistaTexts = new ArrayList<>();
+        Scanner sc = new Scanner(System.in);
+        while (sc.hasNextLine()) {
+            llistaTexts.add(sc.nextLine());
+        }
+        sc.close();
 
         try  {
             //Inciam els procesos fills
